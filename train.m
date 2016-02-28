@@ -7,7 +7,7 @@ function [thetas] = train(X, classes, numCrimes)
    fflush(stdout);
    numFeatures = size(X, 2);
    thetas = zeros(numFeatures, numCrimes);
-   options = optimset('GradObj', 'on', 'MaxIter', 20);
+   options = optimset('GradObj', 'on', 'MaxIter', 400);
    for i = 1:numCrimes
       y = classes == i - 1;
       %  Run fminunc to obtain the optimal theta
