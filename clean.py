@@ -9,7 +9,8 @@ import fileinput
 # Example input:
 line = """2003-01-06 00:31:00,"OTHER, OFFENSES","DRIVERS LICENSE, SUSPENDED OR REVOKED",Monday,RICHMOND,"ARREST, CITED",CLEMENT ST / 14TH AV,-122.472984835661,37.7825523645525"""
 
-Example = namedtuple("Example", "time day district address gpslat gpslon crime")
+Example = namedtuple("Example", "time day district block street gpslat gpslon crime")
+Address = namedtuple("Address", "block street")
 districts = {}
 crimes = {}
 addresses = {}
@@ -24,6 +25,9 @@ a = re.compile("(\d\d\d\d-\d\d-\d\d) (\d\d:\d\d:\d\d)," # date and time
                "((?:[^,\"]+)|(?:\"(?:[^\"]+)\")),"      # address
                "(-?\d+\.\d+),(-?\d+.\d+)")              # GPS coordinate
 
+#b = re.compile("(.+) (?:(?:Block of (.+))|(?:/ (.+)))") # block and street pairs
+b = re.compile("(.+) (?:(?:Block of)|(?:/(?: (.+))?))")
+
 def classify(member, classes):
     memberCategory = -1
     if member in classes:
@@ -36,18 +40,29 @@ def classify(member, classes):
                 f.write("'{:s}';\n".format(member))
     return memberCategory
 
+def parseAddress(address):
+    found = b.match(address)
+    if not found:
+        raise SyntaxError("address did not match: '" + address + "'")
+    groups = found.groups()
+    if len(groups) != 2:
+        raise SyntaxError("did not find two groups as expected")
+    return Address(groups[0], groups[1])
+
 def parse(line):
     found = a.match(line)
     if not found:
         raise SyntaxError("line did not match: '" + line + "'")
     groups = found.groups()
     if len(groups) != numGroups:
-        raise SyntaxError("unexpected number of groups, want {0}, got {1}". format(numGroups, len(groups)))
+        raise SyntaxError("unexpected number of groups, want {0}, got {1}".format(numGroups, len(groups)))
     curTime = time.strptime(groups[0] + " " + groups[1], "%Y-%m-%d %H:%M:%S")
+    address = parseAddress(groups[7])
     return Example(time.mktime(curTime),
                    curTime.tm_mday,
                    classify(groups[5], districts),
-                   classify(groups[7], addresses),
+                   classify(address.block, addresses),
+                   classify(address.street, addresses),
                    float(groups[8]),
                    float(groups[9]),
                    classify(groups[2], crimes))
@@ -56,11 +71,12 @@ def main():
     with open('crimes.m', 'a') as f:
         f.truncate(0)
         f.write("crimes=[\n")
-    for line in fileinput.input():
-        example = parse(line)
-        print('{:f},{:d},{:d},{:d},{:f},{:f},{:d}'.format(example.time,
-              example.day, example.district, example.address,
-              example.gpslat, example.gpslon, example.crime))
+    with open('train.csv', 'r') as trainFile:
+        for line in trainFile:
+            example = parse(line)
+            print('{:f},{:d},{:d},{:d},{:d},{:f},{:f},{:d}'.format(example.time,
+                  example.day, example.district, example.block, example.street,
+                  example.gpslat, example.gpslon, example.crime))
     with open('crimes.m', 'a') as f:
         f.write("];\n")
 

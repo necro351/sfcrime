@@ -4,15 +4,27 @@
 % Read in the training data
 load
 
+% Add features
+fprintf('Adding indicator variables for time features\n');
+fflush(stdout);
+timeFeatures = addTimeFeatures(data(:,1));
+precinctFeatures = addClassFeatures(data(:,3));
+%blockFeatures = addClassFeatures(data(:,4));
+%streetFeatures = addClassFeatures(data(:,5));
+crimes = data(:,7);
+%data = [timeFeatures, precinctFeatures, blockFeatures, streetFeatures, crimes];
+data = [timeFeatures, precinctFeatures, crimes];
+
 % Feature scale the data
-featureScale
+%fprintf('Feature scaling data\n');
+%fflush(stdout);
+%scaledData = featureScale(data);
 
 % TODO: Divide the training data into train, _CV_, and test
 % TODO: Divide the training data into train and test
-%divide
-% 
-X = scaledData(:,1:numFeatures);
-classes = scaledData(:,numFeatures + 1);
+
+X = data(:,1:size(data, 2) - 1);
+classes = data(:,size(data, 2));
 
 % Plot the train data
 plot(data, crimes);
