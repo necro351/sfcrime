@@ -5,7 +5,6 @@ clear ; close all; clc
 fprintf('Loading the data into Octave\n');
 fflush(stdout);
 data=csvread('train.data');
-crimes;
 % The columns of the train data are:
 % 1     2    3         4      5       6       7       8
 % time, day, district, block, street, gpslat, gpslon, crime
