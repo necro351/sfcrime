@@ -1,2 +1,4 @@
-clean.pyc
-train.data
+trainedModel
+trainingSet
+crimeNames.m
+data/

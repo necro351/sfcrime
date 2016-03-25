@@ -71,12 +71,11 @@ def main():
     with open('crimeNames.m', 'a') as f:
         f.truncate(0)
         f.write("crimeNames=[\n")
-    with open('train.csv', 'r') as trainFile:
-        for line in trainFile:
-            example = parse(line)
-            print('{:f},{:d},{:d},{:d},{:d},{:f},{:f},{:d}'.format(example.time,
-                  example.day, example.district, example.block, example.street,
-                  example.gpslat, example.gpslon, example.crime))
+    for line in fileinput.input():
+        example = parse(line)
+        print('{:f},{:d},{:d},{:d},{:d},{:f},{:f},{:d}'.format(example.time,
+              example.day, example.district, example.block, example.street,
+              example.gpslat, example.gpslon, example.crime))
     with open('crimeNames.m', 'a') as f:
         f.write("];\n")
 
