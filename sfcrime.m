@@ -18,22 +18,15 @@ timeFeatures = addTimeFeatures(data(:,1));
 precinctFeatures = addClassFeatures(data(:,3));
 %blockFeatures = addClassFeatures(data(:,4));
 %streetFeatures = addClassFeatures(data(:,5));
-landmarkFeatures = addLandmarkFeatures(data(:, 6:7));
-landmarkFeatures = featureScale(landmarkFeatures);
+landmarkFeatures = featureScale(addLandmarkFeatures(data(:, 6:7)));
 crimes = data(:,size(data, 2));
-%data = [timeFeatures, precinctFeatures, blockFeatures, streetFeatures, crimes];
 data = [timeFeatures, precinctFeatures, landmarkFeatures, crimes];
-
-% Feature scale the data
-%fprintf('Feature scaling data\n');
-%fflush(stdout);
-%scaledData = featureScale(data);
 
 % TODO: Divide the training data into train, _CV_, and test
 % TODO: Divide the training data into train and test
 
-X = data(:,1:size(data, 2) - 1);
-classes = data(:,size(data, 2));
+X = data(1:10000,1:size(data, 2) - 1);
+classes = data(1:10000,size(data, 2));
 
 % Plot the train data
 plot(data, crimes);

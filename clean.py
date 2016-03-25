@@ -36,7 +36,7 @@ def classify(member, classes):
         memberCategory = len(classes)
         classes[member] = memberCategory
         if classes is crimes:
-            with open('crimes.m', 'a') as f:
+            with open('crimeNames.m', 'a') as f:
                 f.write("'{:s}';\n".format(member))
     return memberCategory
 
@@ -68,16 +68,16 @@ def parse(line):
                    classify(groups[2], crimes))
 
 def main():
-    with open('crimes.m', 'a') as f:
+    with open('crimeNames.m', 'a') as f:
         f.truncate(0)
-        f.write("crimes=[\n")
+        f.write("crimeNames=[\n")
     with open('train.csv', 'r') as trainFile:
         for line in trainFile:
             example = parse(line)
             print('{:f},{:d},{:d},{:d},{:d},{:f},{:f},{:d}'.format(example.time,
                   example.day, example.district, example.block, example.street,
                   example.gpslat, example.gpslon, example.crime))
-    with open('crimes.m', 'a') as f:
+    with open('crimeNames.m', 'a') as f:
         f.write("];\n")
 
 if __name__ == "__main__":

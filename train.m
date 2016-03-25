@@ -3,11 +3,12 @@ function [thetas] = train(X, classes, numCrimes)
 %      X,y for each class 'i' in y.
    % Use 1-vs-all logistic regression:
    % for each category, compute thetas
+   crimeNames;
    fprintf('Fitting classifiers for each crime category...\n');
    fflush(stdout);
    numFeatures = size(X, 2);
    thetas = zeros(numFeatures, numCrimes);
-   options = optimset('GradObj', 'on', 'MaxIter', 400);
+   options = optimset('GradObj', 'on', 'MaxIter', 100);
    for i = 1:numCrimes
       y = classes == i - 1;
       %  Run fminunc to obtain the optimal theta
@@ -15,7 +16,7 @@ function [thetas] = train(X, classes, numCrimes)
       [theta, cost] = fminunc(@(t)(costFunction(t, X, y)), ...
                               thetas(:,i), options);
       thetas(:,i) = theta;
-      fprintf('\tCrime %d fit with cost %f\n', i - 1, cost);
+      fprintf('\t"%s" fit with cost %f\n', crimeNames(i,:), cost);
       fflush(stdout);
    end
 end
