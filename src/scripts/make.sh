@@ -1,7 +1,11 @@
 #!/bin/bash
 
 if [ "$#" != "1" ]; then
-   echo "error: need to supply a command"
+   echo "help: Valid commands are:"
+   echo "  parsetrain    Unpack the training data, parse it, and store the"
+   echo "                result as a CSV file"
+   echo "  clean         Remove all files created by running parser or octave"
+   echo "                scripts"
    exit 1
 fi
 
