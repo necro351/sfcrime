@@ -6,10 +6,7 @@
 # docker build -t sfcrime .
 #
 # # Mount your source in an interactive container for quick testing:
-# docker run -v `pwd`/src:/src/sfcrime `pwd`/data:/data/sfcrime-v -i -t docker bash
-#
-# # Run the unit tests
-# docker run sfcrime tests.sh
+# docker run -v `pwd`/src:/src/sfcrime -v `pwd`/data:/data/sfcrime -i -t docker bash
 #
 
 FROM debian:jessie

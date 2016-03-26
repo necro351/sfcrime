@@ -1,7 +1,7 @@
 % Read in the training data
 fprintf('Loading the data into Octave\n');
 fflush(stdout);
-data=csvread('train.data');
+data=csvread('/data/sfcrime/train.data');
 % The columns of the train data are:
 % 1     2    3         4      5       6       7       8
 % time, day, district, block, street, gpslat, gpslon, crime
@@ -26,4 +26,4 @@ X = X(rndIDX(1:10000),:);
 classes = classes(rndIDX(1:10000),:);
 numCrimes = max(classes);
 
-save -binary trainingSet X classes numCrimes
+save -binary /data/sfcrime/trainingSet X classes numCrimes

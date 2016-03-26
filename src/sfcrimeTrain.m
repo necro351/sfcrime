@@ -1,5 +1,5 @@
-load trainingSet;
+load /data/sfcrime/trainingSet;
 
 thetas = train(X, classes, numCrimes);
 
-save -binary trainedModel thetas
+save -binary /data/sfcrime/trainedModel thetas

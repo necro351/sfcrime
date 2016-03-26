@@ -1,5 +1,5 @@
-load trainingSet
-load trainedModel
+load /data/sfcrime/trainingSet
+load /data/sfcrime/trainedModel
 
 predictedCrimes = logisticClassify(thetas, X);
 accuracy = predictedCrimes == classes;
