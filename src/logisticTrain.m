@@ -1,4 +1,4 @@
-function [thetas] = train(X, classes, numCrimes)
+function [thetas] = logisticTrain(X, classes, numCrimes)
 %TRAIN Fit the logistic regression model theta(:,i) to the given training set
 %      X,y for each class 'i' in y.
    % Use 1-vs-all logistic regression:
@@ -13,7 +13,7 @@ function [thetas] = train(X, classes, numCrimes)
       y = classes == i - 1;
       %  Run fminunc to obtain the optimal theta
       %  This function will return theta and the cost 
-      [theta, cost] = fminunc(@(t)(costFunction(t, X, y)), ...
+      [theta, cost] = fminunc(@(t)(logisticCostFunction(t, X, y)), ...
                               thetas(:,i), options);
       thetas(:,i) = theta;
       fprintf('\t"%s" fit with cost %f\n', crimeNames(i,:), cost);

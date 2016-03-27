@@ -29,8 +29,8 @@ random sampled subset of the data, and finally classify using that model:
 ```
 octave
 octave> sfcrimeFeatures
-octave> sfcrimeTrain
-octave> sfcrimeClassify
+octave> sfcrimeLogisticTrain
+octave> sfcrimeLogisticClassify
 ```
 
 That's it! You should get a 23% prediction accuracy.
