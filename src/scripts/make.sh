@@ -22,11 +22,16 @@ if [ "$COMMAND" = "parsetrain" ]; then
    # Unpack the train data, parse it, and dump the matrix into a CSV file
    zcat /data/sfcrime/train.csv.gz|/src/sfcrime/scripts/clean.py> \
         /data/sfcrime/train.data
+   exit 0
 fi
 
 if [ "$COMMAND" = "clean" ]; then
    # Remove files created from running parser and octave scripts
-   rm -f /src/sfcrime/trainedModel
-   rm -f /src/sfcrime/trainingSet
-   rm -f /data/train.data
+   rm -f /data/sfcrime/trainedModel
+   rm -f /data/sfcrime/trainingSet
+   rm -f /data/sfcrime/train.data
+   exit 0
 fi
+
+echo "error: unrecognized command"
+exit 1
