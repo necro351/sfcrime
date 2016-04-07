@@ -52,8 +52,9 @@ A3 = sigmoid(Z3);
 yHat = A3';
 
 % we use a trick to convert class labels to one-hot-vectors
-% (i.e., 3 becomes [0; 0; 1; 0; ... 0]
-yOneHot = ((zeros(length(y), num_labels) + (1:num_labels)) == y)';
+% (i.e., 3 becomes [0; 0; 0; 1; ... 0] and
+%        0 becomes [1; 0; 0; 0; ... 0]
+yOneHot = ((zeros(length(y), num_labels) + ((1:num_labels) .- 1)) == y)';
 
 J = 1/m*sum(sum(-yOneHot.*log(yHat) - (1 .- yOneHot).*log(1 .- yHat)));
 J += lambda/(2*m)*(sum(sum(Theta1(:, 2:end).^2)) + ...

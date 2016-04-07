@@ -21,9 +21,9 @@ numCrimes = max(classes);
 % Uncomment these commands to shrink the training set size down to only 10K
 % training samples if you want training to run faster (e.g., because you are
 % debugging something).
-rndIDX = randperm(size(X,1)); 
-X = X(rndIDX(1:20000),:);
-classes = classes(rndIDX(1:20000),:);
-numCrimes = max(classes);
+%rndIDX = randperm(size(X,1));
+%X = X(rndIDX(1:20000),:);
+%classes = classes(rndIDX(1:20000),:);
+%numCrimes = max(classes);
 
 save -binary /data/sfcrime/trainingSet X classes numCrimes

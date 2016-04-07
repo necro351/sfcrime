@@ -6,7 +6,7 @@
 # docker build -t sfcrime .
 #
 # # Mount your source in an interactive container for quick testing:
-# docker run -v `pwd`/src:/src/sfcrime -v `pwd`/data:/data/sfcrime -i -t docker bash
+# docker run -v `pwd`/src:/src/sfcrime -v `pwd`/data:/data/sfcrime -i -t sfcrime bash
 #
 
 FROM debian:jessie
@@ -15,6 +15,7 @@ FROM debian:jessie
 RUN apt-get update && apt-get install -y \
    octave \
    python \
+   less \
    --no-install-recommends
 
 # Upload sfcrime source

@@ -19,18 +19,11 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 options = optimset('MaxIter', 50);
 lambda = 1;
 
-% Convert classes to one-hot-vectors for neural net
-y = zeros(size(classes, 1), num_labels);
-for i = 1:size(classes, 1)
-   % Maps 0 to 1, 1 to 2, ..., 39 to 40
-   y(i,classes(i) + 1) = 1;
-end
-
 % Create "short hand" for the cost function to be minimized
 costFunction = @(p) neuralCostFunction(p, ...
                                        input_layer_size, ...
                                        hidden_layer_size, ...
-                                       num_labels, X, y, lambda);
+                                       num_labels, X, classes, lambda);
 
 % Now, costFunction is a function that takes in only one argument (the
 % neural network parameters)
